@@ -1,0 +1,90 @@
+﻿@using PagedList;
+
+@using PagedList.Mvc;
+
+@using PAI_141249.Models;
+
+@model IPagedList<PAI_141249.Models.Tournament>
+
+@{
+    ViewBag.Title = "Strona Główna";
+}
+
+<h2>Strona Główna</h2>
+
+<span>
+
+    @Html.ActionLink("Login", "Login", "User")
+    @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+    }
+</span>
+@if (Session["user"] != null)
+{
+    <p>@Html.ActionLink("Nowy Turniej", "NewTournament")</p>
+}
+
+
+
+@if (Session["user"] != null)
+{
+    <p>Witaj!</p>
+}
+else
+{
+    <p>Nie zalogowany użytkownik</p>
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    @Html.TextBox("search")
+    <input type="submit" name="submit" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Dyscyplina)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="2">
+                Nie znaleziono turnieju
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Nazwa, "Details", new { id = item.IdTurnieju })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dyscyplina)
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+@Html.PagedListPager(Model, pageNumber => Url.Action("Index", new
+{
+    pageNumber,
+    search = Request.QueryString["search"]
+}))
+
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
