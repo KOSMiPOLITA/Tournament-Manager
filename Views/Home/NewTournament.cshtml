@@ -1,18 +1,39 @@
 ﻿@model PAI_141249.Models.Tournament
 
 @{
-    ViewBag.Title = "Nowy turniej";
+    ViewBag.Title = "Nowy Turniej";
 }
 
-<h2>Nowy turniej</h2>
+<style>
+    .desc {
+        text-decoration: dotted;
+    }
+
+    .mapalink {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .mapalink > a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .mapalink > a:hover {
+        color: blue;
+        text-decoration: underline;
+    }
+
+</style>
+
+<h2>Nowy Turniej</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Tournament</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -24,19 +45,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Dyscyplina, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Dyscyplina, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dyscyplina, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Czas, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Czas, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Czas, "", new { @class = "text-danger" })
-            </div>
+        <div class="mapalink">
+            <a href="https://www.latlong.net/">Sprawdź współrzędne danego miejsca</a>
         </div>
 
         <div class="form-group">
@@ -80,23 +97,24 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Organizator, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Logos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="desc">(oddzielane średnikiem)</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Organizator, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Organizator, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Logos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Logos, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Zatwierdź turniej" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-success" onclick="return confirm('Czy na pewno chcesz dodać nowy turniej?');"/>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Powrót", "Index", "Home")
+    @Html.ActionLink("Powrót", "Index")
 </div>
 
 @section Scripts {

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WynikiDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WynikiTurniejow">
+          <Key>
+            <PropertyRef Name="IdTurnieju" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="Runda" />
+          </Key>
+          <Property Name="IdTurnieju" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdPrzeciwnik" Type="int" />
+          <Property Name="Para" Type="int" Nullable="false" />
+          <Property Name="Wygrany" Type="int" />
+          <Property Name="Runda" Type="int" Nullable="false" />
+          <Property Name="Nazwa" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="WynikiDatabaseModelStoreContainer">
+          <EntitySet Name="WynikiTurniejow" EntityType="Self.WynikiTurniejow" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WynikiDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="WynikiTurniejow">
+          <Key>
+            <PropertyRef Name="IdTurnieju" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="Runda" />
+          </Key>
+          <Property Name="IdTurnieju" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdPrzeciwnik" Type="Int32" />
+          <Property Name="Para" Type="Int32" Nullable="false" />
+          <Property Name="Wygrany" Type="Int32" />
+          <Property Name="Runda" Type="Int32" Nullable="false" />
+          <Property Name="Nazwa" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="WynikiDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WynikiTurniejows" EntityType="Self.WynikiTurniejow" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WynikiDatabaseModelStoreContainer" CdmEntityContainer="WynikiDatabaseEntities">
+          <EntitySetMapping Name="WynikiTurniejows">
+            <EntityTypeMapping TypeName="WynikiDatabaseModel.WynikiTurniejow">
+              <MappingFragment StoreEntitySet="WynikiTurniejow">
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="IdTurnieju" ColumnName="IdTurnieju" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdPrzeciwnik" ColumnName="IdPrzeciwnik" />
+                <ScalarProperty Name="Para" ColumnName="Para" />
+                <ScalarProperty Name="Wygrany" ColumnName="Wygrany" />
+                <ScalarProperty Name="Runda" ColumnName="Runda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

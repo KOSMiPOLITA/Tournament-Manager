@@ -3,13 +3,30 @@
 @using PAI_141249.Models;
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły turnieju";
 }
 
-<h2>Details</h2>
+@{
+    var X = Model.MapaGoogleX.ToString().Replace(',', '.');
+    var Y = Model.MapaGoogleY.ToString().Replace(',', '.');
+}
+
+<style>
+    #map {
+        height: 400px;
+        width: 40%;
+    }
+
+    .logo {
+        height: 75px;
+        margin-top: 10px;
+        padding-right: 10px;
+    }
+</style>
+
+<h2>Szczegóły turnieju</h2>
 
 <div>
-    <h4>Tournament</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,11 +46,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Czas)
+            @Html.DisplayNameFor(model => model.Data)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Czas)
+            @Html.DisplayFor(model => model.Data)
         </dd>
 
         <dt>
@@ -41,18 +58,21 @@
         </dt>
 
         <dd>
+            <div id="map"></div>
             <script>
-                var map;
+                let map;
+                let XXX = @X;
+                let YYY = @Y;
                 function initMap() {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        center: { lat: -34.397, lng: 150.644 },
-                        zoom: 8
-                    });
+                    var myCenter = new google.maps.LatLng(XXX, YYY);
+                    var mapProp = { center: myCenter, zoom: 12, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+                    var map = new google.maps.Map(document.getElementById("map"), mapProp);
+                    var marker = new google.maps.Marker({ position: myCenter });
+                    marker.setMap(map);
                 }
             </script>
-            <script async
-                    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxFGLKmK5ZtAgogx_q-yyPorrH7zw-DLc&callback=initMap&libraries=&v=weekly"
+                    async></script>
         </dd>
 
         <dt>
@@ -87,23 +107,87 @@
             @Html.DisplayFor(model => model.Organizator)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Logos)
+        </dt>
+
+        <dd>
+            @if (Model.Logos != null && Model.Logos != "")
+            {
+                string[] links = Model.Logos.Split(';');
+                foreach (var l in links)
+                {
+                    <img src="@l" alt="logo" class="logo">
+                }
+            }
+            else
+            {
+                <p>Dany turniej nie ma w bazie zapisanego żadnego loga sponsora</p>
+            }
+        </dd>
+
     </dl>
 </div>
 
-<p>
-    @Html.ActionLink("Edytuj", "Edit", new { id = Model.IdTurnieju }) |
-    @Html.ActionLink("Powrót", "Index")
-</p>
+@{
+    if (Session["user"] != null)
+    {
+        User uzytkownik = (User)Session["user"];
 
+        if (uzytkownik.Email == Model.Organizator)
+        {
+    <p>
+        @Html.ActionLink("Edytuj", "EditTournament", new { id = Model.IdTurnieju })
+        @if (Model.Deadline <= DateTime.Now)
+        {
+            @Html.ActionLink("Drabinka", "FindTournamentBracket", "Home", new { id = Model.IdTurnieju })
+        }
+        else
+        {
+            @Html.ActionLink("Zapisz się", "SingUp", "Home")
+        }
+        @Html.ActionLink("Powrót", "Index")
+    </p>
+        }
+        else
+        {
+            <p>
+                @if (Model.Deadline <= DateTime.Now) {
+                    @Html.ActionLink("Drabinka", "FindTournamentBracket", "Home", new { id = Model.IdTurnieju })
+                    }
+                else
+                    {
+                        @Html.ActionLink("Zapisz się", "SingUp", "Home") 
+                    }
+                @Html.ActionLink("Powrót", "Index")
+            </p>
+        }
 
+        uzytkownik = null;
+    }
+    else
+    {
+
+        <p>
+            @if (Model.Deadline <= DateTime.Now) {
+                    @Html.ActionLink("Drabinka", "FindTournamentBracket", "Home", new { id = Model.IdTurnieju })
+                    }
+            else
+                    {
+                        @Html.ActionLink("Zapisz się", "SingUp", "Home") 
+                    }
+             @Html.ActionLink("Powrót", "Index")
+        </p>
+    }
+}
 
 
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=API "></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/scripts/jquery-3.3.1.min.js"></script>
     <script src="~/scripts/bootstrap.min.js"></script>
     <script src="~/scripts/jquery.validate.min.js"></script>
     <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 }

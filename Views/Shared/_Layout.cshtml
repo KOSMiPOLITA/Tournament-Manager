@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using PAI_141249.Models;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,22 +9,45 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <link href="@Url.Content("~/Styles/Style.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 @Html.ActionLink("Strona główna", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
+        </div>
+        <div class="container">
+            <nav class="zestaw_linkow">
+
+                @if (Session["user"] == null)
+                {
+                    @Html.ActionLink("Logowanie", "Login", "User")
+                }
+                @if (Session["user"] != null)
+                {
+                    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj się</a>
+                    }
+
+                    @Html.ActionLink("Nowy Turniej", "NewTournament")
+                    @Html.ActionLink("Moje Turnieje", "UserTournaments")
+                }
+                @if (Session["user"] != null)
+                {
+                    User uzytkownik = (User)Session["user"];
+                    <p class="zalogowany">Zalogowany jako @uzytkownik.Email</p>
+                    uzytkownik = null;
+                }
+                else
+                {
+                    <p class="zalogowany">Niezalogowany użytkownik</p>
+                }
+            </nav>
         </div>
     </div>
 

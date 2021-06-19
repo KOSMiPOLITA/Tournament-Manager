@@ -1,10 +1,10 @@
 ﻿@model PAI_141249.Models.User
 
 @{
-    ViewBag.Title = "Registration";
+    ViewBag.Title = "Rejestracja";
 }
 
-<h2>Registration</h2>
+<h2>Rejestracja</h2>
 
 @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
@@ -15,6 +15,13 @@
 
 else
 {
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error! </strong>@ViewBag.Message
+        </div>
+    }
+
     using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -65,24 +72,17 @@ else
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Zarejestruj się" class="btn btn-success" onclick="return confirm('Czy na pewno chcesz się zarejestrować?');" />
                 </div>
             </div>
         </div>
-
-        if (ViewBag.Message != null)
-        {
-            <div class="alert alert-danger">
-                <strong>Error! </strong>@ViewBag.Message
-            </div>
-        }
     }
 }
 
 
 
 <div>
-    @Html.ActionLink("Login", "Login")
+    @Html.ActionLink("Logowanie", "Login")
 </div>
 
 @section Scripts {

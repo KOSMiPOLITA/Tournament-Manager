@@ -1,0 +1,541 @@
+﻿@model IEnumerable<PAI_141249.Models.WynikiTurniejow>
+
+@using PAI_141249.Models;
+
+@{
+    int id_ttt = 1;
+    WynikiDatabaseEntities db = new WynikiDatabaseEntities();
+    TournamentDatabaseEntities db2 = new TournamentDatabaseEntities();
+    foreach (var item in Model)
+    {
+        id_ttt = item.IdTurnieju;
+        break;
+    }
+
+    DateTime dataTur = db2.Tournaments.Where(a => a.IdTurnieju == id_ttt).FirstOrDefault().Data;
+    ViewBag.Title = "Drabinka Turniejowa";
+    int l = Convert.ToInt32(Session["limit"]);
+    double l2 = Math.Pow(2, (Math.Log(l, 2))) * 3 + 4;
+    int limit = (int)l2;
+    List<string> uczestnicy1 = new List<string>();
+    List<int> rundy1 = new List<int>();
+    List<int> pary1 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 1) {
+            uczestnicy1.Add(item.Nazwa);
+            rundy1.Add(item.Runda);
+            pary1.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy2 = new List<string>();
+    List<int> rundy2 = new List<int>();
+    List<int> pary2 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 2)
+        {
+            uczestnicy2.Add(item.Nazwa);
+            rundy2.Add(item.Runda);
+            pary2.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy3 = new List<string>();
+    List<int> rundy3 = new List<int>();
+    List<int> pary3 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 3)
+        {
+            uczestnicy3.Add(item.Nazwa);
+            rundy3.Add(item.Runda);
+            pary3.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy4 = new List<string>();
+    List<int> rundy4 = new List<int>();
+    List<int> pary4 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 4)
+        {
+            uczestnicy4.Add(item.Nazwa);
+            rundy4.Add(item.Runda);
+            pary4.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy5 = new List<string>();
+    List<int> rundy5 = new List<int>();
+    List<int> pary5 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 5)
+        {
+            uczestnicy5.Add(item.Nazwa);
+            rundy5.Add(item.Runda);
+            pary5.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy6 = new List<string>();
+    List<int> rundy6 = new List<int>();
+    List<int> pary6 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 6)
+        {
+            uczestnicy6.Add(item.Nazwa);
+            rundy6.Add(item.Runda);
+            pary6.Add(item.Para);
+        }
+    }
+    List<string> uczestnicy7 = new List<string>();
+    List<int> rundy7 = new List<int>();
+    List<int> pary7 = new List<int>();
+    foreach (var item in Model)
+    {
+        if (item.Runda == 7)
+        {
+            uczestnicy7.Add(item.Nazwa);
+            rundy7.Add(item.Runda);
+            pary7.Add(item.Para);
+        }
+    }
+}
+
+<h2>Drabinka Turniejowa</h2>
+
+<div class="container">
+    <div class="row">
+        @if (DateTime.Now >= dataTur)
+        {
+            <div class="mb-md-3">
+                @Html.ActionLink("Wprowadź wynik", "AddResult", "Home")
+            </div>
+        }
+    </div>
+    @if (Session["msg"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Uwaga! </strong>@Session["msg"]
+        </div>
+        Session["msg"] = null;
+    }
+</div>
+
+<div class="container">
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{ int id = 0;
+            if (uczestnicy1 != null)
+            {
+
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy1.Count)
+                    {
+
+                        if (i % 6 == 1)
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill bg-primary">
+                                    @uczestnicy1[id]
+                                </div>
+                            </div>
+                            id++;
+                        }
+                        else if (i % 6 == 3)
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill bg-primary">
+                                    @uczestnicy1[id]
+                                </div>
+                            </div>
+                            id++;
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                    
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+    </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            int check = 0;
+            if (uczestnicy2 != null)
+            {
+                id = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy2.Count)
+                    {
+
+                        if (i % 12 == 2)
+                        {
+                            if (uczestnicy2[id] == uczestnicy1[check] || uczestnicy2[id] == uczestnicy1[check + 1])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy2[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                    
+                                </div>
+                            </div>
+                            }
+                            check += 2;
+
+                        }
+                        else if (i % 12 == 8)
+                        {
+                            if (uczestnicy2[id] == uczestnicy1[check] || uczestnicy2[id] == uczestnicy1[check + 1])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy2[id]
+                                    </div>
+                                </div>
+
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 2;
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+    </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            if (uczestnicy3 != null)
+            {
+                id = 0;
+                check = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy3.Count)
+                    {
+
+                        if (i % 12 == 5)
+                        {
+                            if (uczestnicy3[id] == uczestnicy1[check] || uczestnicy3[id] == uczestnicy1[check + 1] || uczestnicy3[id] == uczestnicy1[check + 2] || uczestnicy3[id] == uczestnicy1[check + 3]) 
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy3[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 4;
+
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                            }
+
+
+                        }
+                    }
+                }
+            }
+        </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            if (uczestnicy4 != null)
+            {
+                id = 0;
+                check = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy4.Count)
+                    {
+
+                        if (i % 24 == 12)
+                        {
+                            if (uczestnicy4[id] == uczestnicy1[check] || uczestnicy4[id] == uczestnicy1[check + 1] || uczestnicy4[id] == uczestnicy1[check + 2] || uczestnicy4[id] == uczestnicy1[check + 3] ||
+                                uczestnicy4[id] == uczestnicy1[check + 4] || uczestnicy4[id] == uczestnicy1[check + 5] || uczestnicy4[id] == uczestnicy1[check + 6] || uczestnicy4[id] == uczestnicy1[check + 7])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy4[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 8;
+
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+                }
+
+
+            }
+        }
+        
+
+    </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            if (uczestnicy5 != null)
+            {
+                id = 0;
+                check = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy5.Count)
+                    {
+
+                        if (i % 48 == 24)
+                        {
+                            if (uczestnicy5[id] == uczestnicy1[check] || uczestnicy5[id] == uczestnicy1[check + 1] || uczestnicy5[id] == uczestnicy1[check + 2] || uczestnicy5[id] == uczestnicy5[check + 3] ||
+                                uczestnicy5[id] == uczestnicy1[check + 4] || uczestnicy5[id] == uczestnicy1[check + 5] || uczestnicy5[id] == uczestnicy1[check + 6] || uczestnicy5[id] == uczestnicy5[check + 7] ||
+                                uczestnicy5[id] == uczestnicy1[check + 8] || uczestnicy5[id] == uczestnicy1[check + 9] || uczestnicy5[id] == uczestnicy1[check + 10] || uczestnicy5[id] == uczestnicy5[check + 11] ||
+                                uczestnicy5[id] == uczestnicy1[check + 12] || uczestnicy5[id] == uczestnicy1[check + 13] || uczestnicy5[id] == uczestnicy1[check + 14] || uczestnicy5[id] == uczestnicy5[check + 15])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy5[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 16;
+
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+
+                }
+            }
+        }
+
+    </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            if (uczestnicy6 != null)
+            {
+                id = 0;
+                check = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy6.Count)
+                    {
+
+                        if (i % 96 == 48)
+                        {
+                            if (uczestnicy6[id] == uczestnicy1[check] || uczestnicy6[id] == uczestnicy1[check + 1] || uczestnicy6[id] == uczestnicy1[check + 2] || uczestnicy6[id] == uczestnicy5[check + 3] ||
+                                uczestnicy6[id] == uczestnicy1[check + 4] || uczestnicy6[id] == uczestnicy1[check + 5] || uczestnicy6[id] == uczestnicy1[check + 6] || uczestnicy6[id] == uczestnicy5[check + 7] ||
+                                uczestnicy6[id] == uczestnicy1[check + 8] || uczestnicy6[id] == uczestnicy1[check + 9] || uczestnicy6[id] == uczestnicy1[check + 10] || uczestnicy6[id] == uczestnicy5[check + 11] ||
+                                uczestnicy6[id] == uczestnicy1[check + 12] || uczestnicy6[id] == uczestnicy1[check + 13] || uczestnicy6[id] == uczestnicy1[check + 14] || uczestnicy6[id] == uczestnicy5[check + 15] ||
+                                uczestnicy6[id] == uczestnicy1[check + 16] || uczestnicy6[id] == uczestnicy1[check + 17] || uczestnicy6[id] == uczestnicy1[check + 18] || uczestnicy6[id] == uczestnicy5[check + 19] ||
+                                uczestnicy6[id] == uczestnicy1[check + 20] || uczestnicy6[id] == uczestnicy1[check + 21] || uczestnicy6[id] == uczestnicy1[check + 22] || uczestnicy6[id] == uczestnicy5[check + 23] ||
+                                uczestnicy6[id] == uczestnicy1[check + 24] || uczestnicy6[id] == uczestnicy1[check + 25] || uczestnicy6[id] == uczestnicy1[check + 26] || uczestnicy6[id] == uczestnicy5[check + 27] ||
+                                uczestnicy6[id] == uczestnicy1[check + 28] || uczestnicy6[id] == uczestnicy1[check + 29] || uczestnicy6[id] == uczestnicy1[check + 30] || uczestnicy6[id] == uczestnicy5[check + 31])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy6[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 32;
+
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+
+
+                }
+            }
+        }
+
+    </div>
+
+    <div style="display: inline-block; width: 150px;  vertical-align: top; margin: 10px;">
+        @{
+            if (uczestnicy7 != null)
+            {
+                id = 0;
+                check = 0;
+                for (int i = 0; i < limit; i++)
+                {
+                    if (id < uczestnicy7.Count)
+                    {
+
+                        if (i % 192 == 96)
+                        {
+                            if (uczestnicy7[id] == uczestnicy1[check] || uczestnicy7[id] == uczestnicy1[check + 1] || uczestnicy7[id] == uczestnicy1[check + 2] || uczestnicy7[id] == uczestnicy5[check + 3] ||
+                                uczestnicy7[id] == uczestnicy1[check + 4] || uczestnicy7[id] == uczestnicy1[check + 5] || uczestnicy7[id] == uczestnicy1[check + 6] || uczestnicy7[id] == uczestnicy5[check + 7] ||
+                                uczestnicy7[id] == uczestnicy1[check + 8] || uczestnicy7[id] == uczestnicy1[check + 9] || uczestnicy7[id] == uczestnicy1[check + 10] || uczestnicy7[id] == uczestnicy5[check + 11] ||
+                                uczestnicy7[id] == uczestnicy1[check + 12] || uczestnicy7[id] == uczestnicy1[check + 13] || uczestnicy7[id] == uczestnicy1[check + 14] || uczestnicy7[id] == uczestnicy5[check + 15] ||
+                                uczestnicy7[id] == uczestnicy1[check + 16] || uczestnicy7[id] == uczestnicy1[check + 17] || uczestnicy7[id] == uczestnicy1[check + 18] || uczestnicy7[id] == uczestnicy5[check + 19] ||
+                                uczestnicy7[id] == uczestnicy1[check + 20] || uczestnicy7[id] == uczestnicy1[check + 21] || uczestnicy7[id] == uczestnicy1[check + 22] || uczestnicy7[id] == uczestnicy5[check + 23] ||
+                                uczestnicy7[id] == uczestnicy1[check + 24] || uczestnicy7[id] == uczestnicy1[check + 25] || uczestnicy7[id] == uczestnicy1[check + 26] || uczestnicy7[id] == uczestnicy5[check + 27] ||
+                                uczestnicy7[id] == uczestnicy1[check + 28] || uczestnicy7[id] == uczestnicy1[check + 29] || uczestnicy7[id] == uczestnicy1[check + 30] || uczestnicy7[id] == uczestnicy5[check + 31] ||
+                                uczestnicy7[id] == uczestnicy1[check + 32] || uczestnicy7[id] == uczestnicy1[check + 33] || uczestnicy7[id] == uczestnicy1[check + 34] || uczestnicy7[id] == uczestnicy5[check + 35] ||
+                                uczestnicy7[id] == uczestnicy1[check + 36] || uczestnicy7[id] == uczestnicy1[check + 37] || uczestnicy7[id] == uczestnicy1[check + 38] || uczestnicy7[id] == uczestnicy5[check + 39] ||
+                                uczestnicy7[id] == uczestnicy1[check + 40] || uczestnicy7[id] == uczestnicy1[check + 41] || uczestnicy7[id] == uczestnicy1[check + 42] || uczestnicy7[id] == uczestnicy5[check + 43] ||
+                                uczestnicy7[id] == uczestnicy1[check + 44] || uczestnicy7[id] == uczestnicy1[check + 45] || uczestnicy7[id] == uczestnicy1[check + 46] || uczestnicy7[id] == uczestnicy5[check + 47] ||
+                                uczestnicy7[id] == uczestnicy1[check + 48] || uczestnicy7[id] == uczestnicy1[check + 49] || uczestnicy7[id] == uczestnicy1[check + 50] || uczestnicy7[id] == uczestnicy5[check + 51] ||
+                                uczestnicy7[id] == uczestnicy1[check + 52] || uczestnicy7[id] == uczestnicy1[check + 53] || uczestnicy7[id] == uczestnicy1[check + 54] || uczestnicy7[id] == uczestnicy5[check + 59] ||
+                                uczestnicy7[id] == uczestnicy1[check + 60] || uczestnicy7[id] == uczestnicy1[check + 61] || uczestnicy7[id] == uczestnicy1[check + 62] || uczestnicy7[id] == uczestnicy5[check + 63])
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill bg-primary">
+                                        @uczestnicy7[id]
+                                    </div>
+                                </div>
+                                id++;
+                            }
+                            else
+                            {
+                                <div class="row" style="height:20px;">
+                                    <div class="badge rounded-pill">
+
+                                    </div>
+                                </div>
+                            }
+                            check += 64;
+
+                        }
+
+
+                        else
+                        {
+                            <div class="row" style="height:20px;">
+                                <div class="badge rounded-pill">
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+
+                }
+            }
+        }
+
+    </div>
+
+
+
+</div>
+
+    @section Scripts {
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    }

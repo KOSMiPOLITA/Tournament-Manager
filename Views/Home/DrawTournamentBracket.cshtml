@@ -1,0 +1,41 @@
+﻿@model PAI_141249.Models.DrabinkaTurniejow
+
+@{
+    ViewBag.Title = "Drabinka tunieju";
+    int R = 0;
+}
+
+<h2>Drabinka tunieju</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        @{
+            foreach (var i in Model.Lista.Split(';'))
+            {
+                R += 1;
+                if (R != 0 && (R % 2 == 0))
+                {
+                    <dd style="margin-bottom:20px;">
+                        @i
+                    </dd>
+                }
+                else
+                {
+                    <dd>
+                        @i
+                    </dd>
+                }
+            }
+        }
+
+
+    </dl>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

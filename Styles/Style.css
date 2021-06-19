@@ -1,0 +1,35 @@
+﻿.linki {
+    padding-right: 10px;
+}
+
+.linki:last-child {
+    float: right;
+}
+
+.linki_pole {
+    margin-bottom: 10px;
+}
+
+.zestaw_linkow {
+    display: flex;
+}
+
+.zestaw_linkow > * {
+    padding-right: 10px;
+    justify-content: center;
+}
+
+.zestaw_linkow:last-child {
+    margin-left: auto;
+}
+
+.zalogowany {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.logo {
+    height:50px;
+}
+
+

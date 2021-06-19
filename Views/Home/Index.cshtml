@@ -12,30 +12,6 @@
 
 <h2>Strona Główna</h2>
 
-<span>
-
-    @Html.ActionLink("Login", "Login", "User")
-    @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
-    {
-        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
-    }
-</span>
-@if (Session["user"] != null)
-{
-    <p>@Html.ActionLink("Nowy Turniej", "NewTournament")</p>
-}
-
-
-
-@if (Session["user"] != null)
-{
-    <p>Witaj!</p>
-}
-else
-{
-    <p>Nie zalogowany użytkownik</p>
-}
-
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
     @Html.TextBox("search")
@@ -48,7 +24,7 @@ else
             @Html.DisplayNameFor(model => model.First().Nazwa)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.First().Dyscyplina)
+            @Html.DisplayNameFor(model => model.First().Data)
         </th>
         <th></th>
     </tr>
@@ -70,7 +46,7 @@ else
                     @Html.ActionLink(item.Nazwa, "Details", new { id = item.IdTurnieju })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Dyscyplina)
+                    @Html.DisplayFor(modelItem => item.Data)
                 </td>
             </tr>
         }

@@ -85,7 +85,7 @@ namespace PAI_141249.Controllers
             bool Status = false;
             using (UserDatabaseEntities db = new UserDatabaseEntities())
             {
-                db.Configuration.ValidateOnSaveEnabled = false; //W wypadku gdy potwierdzone hasło się nie zgadza
+                db.Configuration.ValidateOnSaveEnabled = false; 
 
                 var v = db.Users.Where(a => a.KodAktywacyjny == new Guid(id)).FirstOrDefault();
                 if (v != null)
@@ -119,7 +119,7 @@ namespace PAI_141249.Controllers
             using (UserDatabaseEntities db = new UserDatabaseEntities())
             {
                 // Czy email znajduje się w DB
-                var v = db.Users.Where(a => a.Email == login.Email).FirstOrDefault();
+                var v = db.Users.Where(a => a.Email == login.Email && a.PotwierdzonyEmail == true).FirstOrDefault();
                 if (v != null)
                 {
                     Session["user"] = v;
@@ -156,7 +156,7 @@ namespace PAI_141249.Controllers
                 }
                 else
                 {
-                    message = "Podano błędne dane";
+                    message = "Podano błędne dane / Email mógł nie zostać jeszcze potwierdzony";
                 }
             }
             ViewBag.Message = message;
@@ -195,6 +195,8 @@ namespace PAI_141249.Controllers
                     konto.KodZresetowanegoHasla = resetCode;
                     db.Configuration.ValidateOnSaveEnabled = false; //uniknięcie błędu dla problemu z brakiem powtórzonego hasła
                     db.SaveChanges();
+                    Session["infoOdLogowania"] = "Wysłano link do zmiany hasła!";
+                    return RedirectToAction("Login", "User");
                 }
                 else
                 {
@@ -242,7 +244,8 @@ namespace PAI_141249.Controllers
                         user.KodZresetowanegoHasla = "";
                         db.Configuration.ValidateOnSaveEnabled = false;
                         db.SaveChanges();
-                        message = "Poprawnie ustawiono nowe hasło!";
+                        Session["infoOdLogowania"] = "Poprawnie ustawiono nowe hasło!";
+                        return RedirectToAction("Login", "User");
                     }
                 }
             }
@@ -278,9 +281,9 @@ namespace PAI_141249.Controllers
             Debug.WriteLine(link); 
 
             #region ...
-            var sender = new MailAddress("erixon09@gmail.com", "Aktywacja konta");
+            var sender = new MailAddress("twój_email@gmail.com", "Aktywacja konta");
             var receiver = new MailAddress(email);
-            var haslo = "POrtoryko123?";
+            var haslo = "**********"; //haslo o emaila
             #endregion
 
             string subject = "";

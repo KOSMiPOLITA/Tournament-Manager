@@ -1,0 +1,61 @@
+﻿
+@model IEnumerable<PAI_141249.Models.WynikiTurniejow>
+
+@using PAI_141249.Models;
+
+@{
+    int i = 0;
+    ViewBag.Title = "Moje Turnieje";
+    List<Tournament> lista = (List<Tournament>)ViewBag.Turnieje;
+}
+
+<h2>Moje Turnieje</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Turniej
+        </th>
+        <th>
+            Runda
+        </th>
+        <th>
+            Data
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @if (item.Runda > 0)
+                {
+                    <p>@Html.DisplayFor(modelItem => item.Runda)</p>
+                }
+                else
+                {
+                    <p>Jeszcze nie rozlosowano</p>
+                }
+            </td>
+            <td>
+                @lista[i++].Data.ToString().Substring(0, 10)
+            </td>
+            <td>
+                @Html.ActionLink("Sprawdź", "Details", new { id = item.IdTurnieju })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

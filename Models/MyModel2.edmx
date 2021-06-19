@@ -4,27 +4,28 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TournamentDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TournamentDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tournaments">
           <Key>
             <PropertyRef Name="IdTurnieju" />
           </Key>
           <Property Name="IdTurnieju" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="varchar(max)" Nullable="false" />
-          <Property Name="Dyscyplina" Type="varchar(max)" Nullable="false" />
+          <Property Name="Dyscyplina" Type="varchar(max)" />
           <Property Name="Czas" Type="int" Nullable="false" />
           <Property Name="MapaGoogleX" Type="float" Nullable="false" />
           <Property Name="MapaGoogleY" Type="float" Nullable="false" />
           <Property Name="Limit" Type="int" Nullable="false" />
           <Property Name="Deadline" Type="date" Nullable="false" />
           <Property Name="Rozstawieni" Type="int" Nullable="false" />
-          <Property Name="Organizator" Type="varchar(max)" Nullable="false" />
+          <Property Name="Organizator" Type="varchar(max)" />
+          <Property Name="Logos" Type="varchar(max)" />
+          <Property Name="Data" Type="date" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TournamentDatabaseModelStoreContainer">
           <EntitySet Name="Tournaments" EntityType="Self.Tournaments" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TournamentDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -34,14 +35,16 @@
           </Key>
           <Property Name="IdTurnieju" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Dyscyplina" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dyscyplina" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Czas" Type="Int32" Nullable="false" />
           <Property Name="MapaGoogleX" Type="Double" Nullable="false" />
           <Property Name="MapaGoogleY" Type="Double" Nullable="false" />
           <Property Name="Limit" Type="Int32" Nullable="false" />
           <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Rozstawieni" Type="Int32" Nullable="false" />
-          <Property Name="Organizator" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Organizator" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logos" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="DateTime" Precision="0" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TournamentDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tournaments" EntityType="Self.Tournament" />
@@ -55,6 +58,8 @@
           <EntitySetMapping Name="Tournaments">
             <EntityTypeMapping TypeName="TournamentDatabaseModel.Tournament">
               <MappingFragment StoreEntitySet="Tournaments">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Logos" ColumnName="Logos" />
                 <ScalarProperty Name="IdTurnieju" ColumnName="IdTurnieju" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="Dyscyplina" ColumnName="Dyscyplina" />

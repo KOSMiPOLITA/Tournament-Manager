@@ -12,6 +12,7 @@ namespace PAI_141249.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email jest wymagany")]
         public string Email { get; set; }
 
+        [Display(Name = "Hasło")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Haslo jest wymagane")]
         [DataType(DataType.Password)]
         public string Haslo { get; set; }

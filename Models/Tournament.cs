@@ -9,11 +9,10 @@
 
 namespace PAI_141249.Models
 {
+    using PAI_141249.Custom_Validation;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using PAI_141249.Controllers;
-    using PAI_141249.Custom_Validation;
 
     public partial class Tournament
     {
@@ -23,37 +22,46 @@ namespace PAI_141249.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Nazwa nie mo¿e byæ puste")]
         public string Nazwa { get; set; }
 
-        [Display(Name = "Dyscyplina")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Dyscyplina nie mo¿e byæ puste")]
         public string Dyscyplina { get; set; }
 
-        [Display(Name = "Czas")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Czas nie mo¿e byæ puste")]
         public int Czas { get; set; }
+
+        [Display(Name = "Data")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Data nie mo¿e byæ puste")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [CheckDateRangeAttribute]
+        public System.DateTime Data { get; set; }
 
         [Display(Name = "Szerokoœæ geograficzna")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Szerokoœæ geograficzna nie mo¿e byæ puste")]
+        [CheckMapy]
         public double MapaGoogleX { get; set; }
 
         [Display(Name = "Wysokoœæ geograficzna")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Wysokoœæ geograficzna nie mo¿e byæ puste")]
+        [CheckMapy2]
         public double MapaGoogleY { get; set; }
 
         [Display(Name = "Limit")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Limit nie mo¿e byæ puste")]
+        [CheckModulo2]
         public int Limit { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Deadline nie mo¿e byæ puste")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [CheckDateRangeAttribute]
         public System.DateTime Deadline { get; set; }
 
         [Display(Name = "Rozstawieni")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Rozstawieni nie mo¿e byæ puste")]
+        [CheckModulo2]
         public int Rozstawieni { get; set; }
 
-        [Display(Name = "Organizator")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Pole Organizator nie mo¿e byæ puste")]
         public string Organizator { get; set; }
+
+        [Display(Name = "Loga sponsorów")]
+        public string Logos { get; set; }
     }
 }
